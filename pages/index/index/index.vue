@@ -1,6 +1,6 @@
 <template>
-    <div class="order">
-        注单
+    <div class="match">
+        比赛
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.order {
+.match {
 
 }
 </style>

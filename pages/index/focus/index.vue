@@ -1,6 +1,6 @@
 <template>
-    <div class="recharge">
-        充提
+    <div class="focus">
+        关注
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.recharge {
+.focus {
 
 }
 </style>

@@ -3,10 +3,13 @@ import path from 'path'
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'shunbo-h5',
+    title: 'score-h5',
+    htmlAttrs: {
+      lang: 'zh-CN'
+    },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
@@ -22,7 +25,9 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    "@/plugins/svg-icon"
+    "~/plugins/svg-icon",
+    '~/plugins/vant',
+    '~/plugins/filters'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -45,7 +50,9 @@ export default {
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    proxy: true
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

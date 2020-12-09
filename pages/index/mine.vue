@@ -1,6 +1,6 @@
 <template>
-    <div class="promotion">
-        优惠
+    <div class="mine">
+        我的
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.promotion {
+.mine {
 
 }
 </style>

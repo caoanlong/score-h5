@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-bar" :style="`height:${height}px`">
+    <div class="tab-bar van-hairline--top" :style="`height:${height}px`">
         <div 
             class="tab-bar-item" 
             v-for="tab in tabs" 
@@ -24,7 +24,7 @@ export default {
     props: {
         height: {
             type: Number,
-            default: 58
+            default: 50
         },
         tabs: Array,
         current: Object
@@ -43,9 +43,7 @@ export default {
     left: 0;
     width: 100%;
     bottom: 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    background-color: #f7f7f7;
-    border-radius: 8px 8px 0 0;
+    background-color: #fff;
     display: flex;
     &-item {
         flex: 1;

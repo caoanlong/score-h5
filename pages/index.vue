@@ -16,11 +16,10 @@
 import TabBar from '@/components/TabBar'
 const TABBAR_HEIGHT = 58
 const TABS = [
-	{id: 0, name: '赛事状态', icon: 'icon-saishi', path: '/'},
-	{id: 1, name: '优惠活动', icon: 'icon-youhui', path: '/promotion'},
-	{id: 2, name: '提款充值', icon: 'icon-tichong', path: '/recharge'},
-	{id: 3, name: '注单', icon: 'icon-zhudan', path: '/order'},
-	{id: 4, name: '设置菜单', icon: 'icon-setting', path: '/setting'}
+	{id: 0, name: '比赛', icon: 'icon-saishi', path: '/'},
+	{id: 1, name: '联赛', icon: 'icon-youhui', path: '/focus'},
+	{id: 2, name: '战队', icon: 'icon-tichong', path: '/data'},
+	{id: 3, name: '我的', icon: 'icon-zhudan', path: '/mine'}
 ]
 export default {
 	components: {

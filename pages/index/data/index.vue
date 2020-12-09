@@ -1,6 +1,6 @@
 <template>
-    <div class="setting">
-        设置
+    <div class="data">
+        数据
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.setting {
+.data {
 
 }
 </style>
