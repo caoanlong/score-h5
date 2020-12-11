@@ -6,22 +6,29 @@
             :height="NAV_HEIGHT" 
             @change="handleType">
         </NavBar>
+        <Segment 
+            :list="TABS" 
+            :height="STATUS_HEIGHT" 
+            :top="NAV_HEIGHT" 
+            :selected="gameStatus" 
+            @change="handleStatus">
+        </Segment>
         <van-tabs 
             class="match-tab" 
-            :style="`top:${NAV_HEIGHT}px`" 
-            v-model="gameStatus" 
+            :style="`top:${NAV_HEIGHT + STATUS_HEIGHT}px`" 
+            v-model="currentDate" 
             color="#168ef0"
             animated 
-            @change="handleStatus">
+            @change="handleDateChange">
             <van-tab 
-                v-for="tab in TABS" 
-                :key="tab.id" 
-                :title="tab.name" 
-                :name="tab.id">
-                <div class="match-tab-content" v-if="dayMatches && dayMatches.length">
+                v-for="(date, i) in dates" 
+                :key="i" 
+                :title="date | transDate2" 
+                :name="date | transDate">
+                <div class="match-tab-content" v-if="matches && matches.length">
                     <div 
                         class="match-tab-content-item"
-                        v-for="match in dayMatches" 
+                        v-for="match in matches" 
                         :key="match.matchId">
                         <div class="match-tab-content-item-top van-hairline--bottom">
                             <img :src="match.tournamentLogo">
@@ -33,8 +40,22 @@
                             <div class="match-tab-content-item-bottom-left">
                                 {{match.matchTime | transTime}}
                             </div>
-                            <div class="match-tab-content-item-bottom-center"></div>
-                            <div class="match-tab-content-item-bottom-right"></div>
+                            <div class="match-tab-content-item-bottom-center">
+                                <div 
+                                    class="match-tab-content-item-bottom-center-left van-ellipsis"
+                                    :style="`background-image:url(${match.homeLogo})`">
+                                    {{match.homeShortName}}
+                                </div>
+                                <div class="match-tab-content-item-bottom-center-center"></div>
+                                <div 
+                                    class="match-tab-content-item-bottom-center-right van-ellipsis"
+                                    :style="`background-image:url(${match.awayLogo})`">
+                                    {{match.awayShortName}}
+                                </div>
+                            </div>
+                            <div class="match-tab-content-item-bottom-right">
+                                <svg-icon icon-class="icon-video"></svg-icon>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,65 +69,82 @@
 import dayjs from 'dayjs'
 import { mapState, mapMutation } from 'vuex'
 import NavBar from '@/components/NavBar'
+import Segment from '@/components/Segment'
 const NAV_HEIGHT = 44
+const STATUS_HEIGHT = 36
 const NAVS = [
-    { id: 'lol', name: '英雄联盟' },
     { id: 'dota', name: 'DOTA2' },
-    { id: 'kog', name: '王者荣耀' },
-    { id: 'csgo', name: 'CS:GO' }
+    { id: 'csgo', name: 'CS:GO' },
+    { id: 'lol', name: '英雄联盟' },
+    { id: 'kog', name: '王者荣耀' }
 ]
 const TABS = [
     { id: 1, name: '未开始' },
     { id: 2, name: '进行中' },
     { id: 3, name: '赛果' },
-    { id: 66, name: '其他' }
+    { id: 15, name: '其他' }
 ]
-const url = 'https://m.shangniu.cn/api/game/user/app/index/matchList'
+const url = '/app/match/findList'
 export default {
     components: {
-        NavBar
+        NavBar,
+        Segment
     },
     data() {
         return {
             NAV_HEIGHT,
+            STATUS_HEIGHT,
             NAVS,
             TABS,
             gameTypes: NAVS[0].id,
-            gameStatus: TABS[0].id
+            gameStatus: TABS[0].id,
+            currentDate: dayjs().format('YYYY-MM-DD')
         }
     },
     async asyncData(ctx) {
+        const dates = []
+        for (let i = 5; i >= 0; i--) {
+            dates.push(dayjs().subtract(i, 'day'))
+        }
+        for (let i = 0; i < 5; i++) {
+           dates.push(dayjs().add(i + 1, 'day'))
+        }
         const params = {
             getType: 3,
             gameTypes: NAVS[0].id,
             gameStatus: TABS[0].id,
             time: dayjs().format('YYYY-MM-DD')
         }
-        const { data } = await ctx.$axios({ url, params })
-        return { dayMatches: data.body.dayMatches }
+        const res = await ctx.$axios({ url, params })
+        return { matches: res.data.data, dates }
     },
     methods: {
         handleType(item) {
             this.gameTypes = item
             this.getList()
         },
-        handleStatus() {
+        handleStatus(item) {
+            this.gameStatus = item
+            this.getList()
+        },
+        handleDateChange(date) {
+            this.currentDate = date
             this.getList()
         },
         getList() {
-            this.dayMatches = []
+            this.matches = []
             this.$toast.loading({
                 message: '加载中...',
                 forbidClick: true,
             })
             const params = {
-                getType: 3,
+                getType: 1,
                 gameTypes: this.gameTypes,
                 gameStatus: this.gameStatus,
-                time: dayjs().format('YYYY-MM-DD')
+                time: this.currentDate
             }
             this.$axios({ url, params }).then(res => {
-                this.dayMatches = res.data.body.dayMatches
+                this.matches = res.data.data
                 this.$toast.clear()
             }).catch(err => {
                 this.$toast.clear()
@@ -181,15 +219,43 @@ export default {
                     line-height: 50px;
                     display: flex;
                     &-left {
-                        width: 60px;
+                        width: 50px;
                         font-size: 12px;
                         color: #999;
                     }
                     &-center {
                         flex: 1;
+                        font-size: 12px;
+                        display: flex;
+                        &-left {
+                            flex: 1;
+                            text-align: right;
+                            padding-right: 30px;
+                            background-repeat: no-repeat;
+                            background-size: 20px;
+                            background-position: right center;
+                        }
+                        &-center {
+                            width: 50px;
+                            background-image: url('../../assets/imgs/dz.png');
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            background-size: 16px;
+                        }
+                        &-right {
+                            flex: 1;
+                            text-align: left;
+                            padding-left: 30px;
+                            background-repeat: no-repeat;
+                            background-size: 20px;
+                            background-position: left center;
+                        }
                     }
                     &-right {
-                        width: 60px;
+                        width: 30px;
+                        font-size: 20px;
+                        text-align: right;
+                        color: $theme-color;
                     }
                 }
             }

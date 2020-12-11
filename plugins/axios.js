@@ -15,6 +15,10 @@ export default ({ redirect, $axios }) => {
             // 重定向到 login 页
             redirect('/login')
         }
+        if (res.data.code != 200) {
+            Toast.fail(res.data.message)
+            throw new Error(res.data.message)
+        }
     })
 
     $axios.onError(err => {

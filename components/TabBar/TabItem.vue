@@ -21,7 +21,7 @@ export default {
     position: relative;
     cursor: pointer;
     &-icon {
-        color: #c6c6c6;
+        color: #adadad;
         font-size: 24px;
     }
     p {
@@ -31,8 +31,11 @@ export default {
         transform: scale(0.85);
     }
     &.active {
+        .tab-item-icon {
+            animation: scaleIcon 0.3s;
+        }
         .tab-item-icon, p {
-            color: #168ef0;
+            color: $theme-color;
             font-weight: bold;
         }
     }

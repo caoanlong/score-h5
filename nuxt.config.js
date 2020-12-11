@@ -14,6 +14,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: '/fastclick.js' },
+      { src: '/init.js' }
     ]
   },
 
@@ -49,9 +53,14 @@ export default {
     scss: '~/assets/scss/variable.scss'
   },
 
+  loading: false,
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     proxy: true
+  },
+  proxy: {
+    '/app/': 'http://sifangdianying.com'
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

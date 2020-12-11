@@ -7,6 +7,8 @@ html, body {
     overflow: hidden;
     overscroll-behavior-y: contain;
 	-webkit-tap-highlight-color: transparent;  /* 取消safari点击变暗效果 */
+	font-family: "Helvetica Neue", "Helvetica", "Roboto", "Droid Sans", "STHeiTi", "sans-serif", "Segoe";
+    padding-bottom: env(safe-area-inset-bottom, 34px);
 }
 div {
 	box-sizing: border-box;
@@ -29,6 +31,21 @@ div {
 
 .grayed {
 	filter: grayscale(100%);
+}
+
+@keyframes scaleIcon {
+    20%{
+        transform: scale(.8);
+    }
+    50%{
+        transform: scale(1);
+    }
+    80%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
 
 #__nuxt {

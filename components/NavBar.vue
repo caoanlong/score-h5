@@ -1,5 +1,5 @@
 <template>
-    <div class="nav van-hairline--bottom" :style="`height:${height}px`">
+    <div class="nav" :style="`height:${height}px`">
         <div 
             class="nav-item" 
             :class="{'active': selected === nav.id}"
@@ -38,7 +38,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
+    background-color: $theme-color;
     &-item {
         width: 80px;
         height: 26px;
@@ -46,9 +46,10 @@ export default {
         text-align: center;
         border-radius: 13px;
         font-size: 14px;
+        color: #fff;
         &.active {
-            color: #fff;
-            background-color: #168ef0;
+            color: $theme-color;
+            background-color: #fff;
         }
     }
 }
