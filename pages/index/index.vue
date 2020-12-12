@@ -26,38 +26,12 @@
                 :title="date | transDate2" 
                 :name="date | transDate">
                 <div class="match-tab-content" v-if="matches && matches.length">
-                    <div 
-                        class="match-tab-content-item"
+                    <MatchItem 
+                        class="match-tab-content-item" 
                         v-for="match in matches" 
-                        :key="match.matchId">
-                        <div class="match-tab-content-item-top van-hairline--bottom">
-                            <img :src="match.tournamentLogo">
-                            <span>{{match.tournamentShortName}}</span>
-                            &nbsp;
-                            <span>BO{{match.box}}</span>
-                        </div>
-                        <div class="match-tab-content-item-bottom">
-                            <div class="match-tab-content-item-bottom-left">
-                                {{match.matchTime | transTime}}
-                            </div>
-                            <div class="match-tab-content-item-bottom-center">
-                                <div 
-                                    class="match-tab-content-item-bottom-center-left van-ellipsis"
-                                    :style="`background-image:url(${match.homeLogo})`">
-                                    {{match.homeShortName}}
-                                </div>
-                                <div class="match-tab-content-item-bottom-center-center"></div>
-                                <div 
-                                    class="match-tab-content-item-bottom-center-right van-ellipsis"
-                                    :style="`background-image:url(${match.awayLogo})`">
-                                    {{match.awayShortName}}
-                                </div>
-                            </div>
-                            <div class="match-tab-content-item-bottom-right">
-                                <svg-icon icon-class="icon-video"></svg-icon>
-                            </div>
-                        </div>
-                    </div>
+                        :key="match.matchId" 
+                        :match="match">
+                    </MatchItem>
                 </div>
                 <van-empty description="暂无数据" v-else/>
             </van-tab>
@@ -70,6 +44,7 @@ import dayjs from 'dayjs'
 import { mapState, mapMutation } from 'vuex'
 import NavBar from '@/components/NavBar'
 import Segment from '@/components/Segment'
+import MatchItem from '@/components/MatchItem'
 const NAV_HEIGHT = 44
 const STATUS_HEIGHT = 36
 const NAVS = [
@@ -88,7 +63,8 @@ const url = '/app/match/findList'
 export default {
     components: {
         NavBar,
-        Segment
+        Segment,
+        MatchItem
     },
     data() {
         return {
@@ -183,80 +159,9 @@ export default {
             height: 100%;
             overflow: hidden auto;
             &-item {
-                width: 100%;
-                background-color: #fff;
                 margin-top: 8px;
-                padding: 0 10px;
-                position: relative;
                 &:last-child {
                     margin-bottom: 8px;
-                }
-                &-top {
-                    height: 40px;
-                    line-height: 40px;
-                    font-size: 13px;
-                    img {
-                        width: 16px;
-                        margin-right: 5px;
-                        position: relative;
-                        top: 3px;
-                    }
-                    &::before {
-                        position: absolute;
-                        top: 14px;
-                        right: 0;
-                        display: block;
-                        content: "";
-                        width: 8px;
-                        height: 8px;
-                        border-top: 2px solid #ddd;
-                        border-right: 2px solid #ddd;
-                        transform: rotate(45deg);
-                    }
-                }
-                &-bottom {
-                    height: 50px;
-                    line-height: 50px;
-                    display: flex;
-                    &-left {
-                        width: 50px;
-                        font-size: 12px;
-                        color: #999;
-                    }
-                    &-center {
-                        flex: 1;
-                        font-size: 12px;
-                        display: flex;
-                        &-left {
-                            flex: 1;
-                            text-align: right;
-                            padding-right: 30px;
-                            background-repeat: no-repeat;
-                            background-size: 20px;
-                            background-position: right center;
-                        }
-                        &-center {
-                            width: 50px;
-                            background-image: url('../../assets/imgs/dz.png');
-                            background-repeat: no-repeat;
-                            background-position: center;
-                            background-size: 16px;
-                        }
-                        &-right {
-                            flex: 1;
-                            text-align: left;
-                            padding-left: 30px;
-                            background-repeat: no-repeat;
-                            background-size: 20px;
-                            background-position: left center;
-                        }
-                    }
-                    &-right {
-                        width: 30px;
-                        font-size: 20px;
-                        text-align: right;
-                        color: $theme-color;
-                    }
                 }
             }
         }
