@@ -37,14 +37,8 @@
 <script>
 import NavBar from '@/components/NavBar'
 import Segment from '@/components/Segment'
-const NAV_HEIGHT = 44
+import { NAVS, NAV_HEIGHT } from '@/utils/consts'
 const STATUS_HEIGHT = 36
-const NAVS = [
-    { id: 'dota', name: 'DOTA2' },
-    { id: 'csgo', name: 'CS:GO' },
-    { id: 'lol', name: '英雄联盟' },
-    { id: 'kog', name: '王者荣耀' }
-]
 const TABS = [
     { id: 1, name: '未开始' },
     { id: 2, name: '进行中' },

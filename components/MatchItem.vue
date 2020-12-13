@@ -2,7 +2,7 @@
     <div class="match-item">
         <div class="match-item-top van-hairline--bottom">
             <img :src="match.tournamentLogo" v-lazy="match.tournamentLogo">
-            <span>{{match.tournamentShortName}}</span>
+            <span>{{match.tournamentName}}</span>
             &nbsp;
             <span>BO{{match.box}}</span>
         </div>

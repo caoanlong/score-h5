@@ -18,7 +18,7 @@ const TABBAR_HEIGHT = 58
 const TABS = [
 	{id: 0, name: '比赛', icon: 'tab-bisai', path: '/'},
 	{id: 1, name: '联赛', icon: 'tab-liansai', path: '/liansai'},
-	{id: 2, name: '战队', icon: 'tab-zhandui', path: '/data'},
+	{id: 2, name: '战队', icon: 'tab-zhandui', path: '/team'},
 	{id: 3, name: '我的', icon: 'tab-wode', path: '/mine'}
 ]
 export default {
