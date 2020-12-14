@@ -7,7 +7,7 @@
             @change="handleType">
         </NavBar>
         <Segment 
-            :list="TABS" 
+            :list="TOURNAMENT_STAUS" 
             :height="STATUS_HEIGHT" 
             :top="NAV_HEIGHT" 
             :selected="status" 
@@ -17,7 +17,9 @@
             class="liansai-content" 
             :style="`top:${NAV_HEIGHT + STATUS_HEIGHT}px`">
             <template v-if="tournaments && tournaments.length">
-                <div 
+                <nuxt-link 
+                    tag="div"
+                    :to="{path: '/tournamentinfo', query: { id: item.tournamentId }}"
                     class="liansai-content-item van-hairline--bottom" 
                     v-for="item in tournaments" :key="item.tournamentId">
                     <div class="liansai-content-item-left">
@@ -27,7 +29,7 @@
                         <h1 class="van-ellipsis">{{item.tournamentName}}</h1>
                         <p>{{item.startTime | transDate}} 至 {{item.endTime | transDate}}</p>
                     </div>
-                </div>
+                </nuxt-link>
             </template>
             <van-empty description="暂无数据" v-else/>
         </div>
@@ -37,13 +39,9 @@
 <script>
 import NavBar from '@/components/NavBar'
 import Segment from '@/components/Segment'
-import { NAVS, NAV_HEIGHT } from '@/utils/consts'
+import { NAVS, NAV_HEIGHT, TOURNAMENT_STAUS } from '@/utils/consts'
 const STATUS_HEIGHT = 36
-const TABS = [
-    { id: 1, name: '未开始' },
-    { id: 2, name: '进行中' },
-    { id: 3, name: '已结束' }
-]
+
 const url = '/app/tournament/findList'
 export default {
     components: {
@@ -55,15 +53,15 @@ export default {
             NAV_HEIGHT,
             STATUS_HEIGHT,
             NAVS,
-            TABS,
+            TOURNAMENT_STAUS,
             gameType: NAVS[0].id,
-            status: TABS[0].id
+            status: TOURNAMENT_STAUS[0].id
         }
     },
     async asyncData(ctx) {
         const params = {
             gameType: NAVS[0].id,
-            status: TABS[0].id
+            status: TOURNAMENT_STAUS[0].id
         }
         const res = await ctx.$axios({ url, params })
         return { tournaments: res.data.data }

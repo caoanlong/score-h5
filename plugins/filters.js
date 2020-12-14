@@ -22,10 +22,14 @@ export function transDate2(value) {
         return day.format('M月D日')
     }
 }
+export function transDate3(value) {
+    return dayjs(value).format('MM-DD')
+}
 const filters = {
     transTime,
     transDate,
-    transDate2
+    transDate2,
+    transDate3
 }
 
 export default filters

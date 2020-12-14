@@ -8,7 +8,9 @@
         </NavBar>
         <div class="team-content clearfix" :style="`top:${NAV_HEIGHT}px`">
             <template v-if="teams && teams.length">
-                <div 
+                <nuxt-link 
+                    tag="div"
+                    :to="{path: '/teaminfo', query: { id: item.id }}"
                     class="team-content-item" 
                     v-for="item in teams" 
                     :key="item.id">
@@ -16,7 +18,7 @@
                         <img :src="item.logo" v-lazy="item.logo">
                         <p class="van-multi-ellipsis--l2">{{item.fullName}}</p>
                     </div>
-                </div>
+                </nuxt-link>
             </template>
             <van-empty description="暂无数据" v-else/>
         </div>
